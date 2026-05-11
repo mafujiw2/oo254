@@ -1,38 +1,38 @@
 namespace: flows
 
 flow:
-name: encode\_and\_probe\_url
+name: encode_and_probe_url
 inputs:
-\- base\_url
-\- raw\_path\_segment
-\- attempts
+- base_url
+- raw_path_segment
+- attempts
 workflow:
-\- encode\_path:
+- encode_path:
 do:
-io.cloudslang.base.http.url\_encoder:
-\- data: '${ raw\_path\_segment }'
-\- safe: '${ "" }'
+io.cloudslang.base.http.url_encoder:
+- data: '${ raw_path_segment }'
+- safe: '${ "" }'
 publish:
-\- encoded\_segment: '${ result }'
-\- error\_message: '${ error\_message }'
+- encoded_segment: '${ result }'
+- error_message: '${ error_message }'
 navigate:
-\- SUCCESS: probe\_endpoint
-\- FAILURE: FAILURE
-\- probe\_endpoint:
+- SUCCESS: probe_endpoint
+- FAILURE: FAILURE
+- probe_endpoint:
 do:
-io.cloudslang.base.http.verify\_url\_is\_accessible:
-\- url: '${ base\_url + "/" + encoded\_segment }'
-\- attempts: '${ attempts }'
+io.cloudslang.base.http.verify_url_is_accessible:
+- url: '${ base_url + "/" + encoded_segment }'
+- attempts: '${ attempts }'
 publish:
-\- probe\_result: '${ return\_result }'
-\- error\_message: '${ error\_message }'
+- probe_result: '${ return_result }'
+- error_message: '${ error_message }'
 navigate:
-\- SUCCESS: SUCCESS
-\- FAILURE: FAILURE
+- SUCCESS: SUCCESS
+- FAILURE: FAILURE
 outputs:
-\- probed\_url: '${ base\_url + "/" + encoded\_segment }'
-\- probe\_result: '${ probe\_result }'
-\- error\_message: '${ error\_message }'
+- probed_url: '${ base_url + "/" + encoded_segment }'
+- probe_result: '${ probe_result }'
+- error_message: '${ error_message }'
 results:
-\- SUCCESS
-\- FAILURE
+- SUCCESS
+- FAILURE
