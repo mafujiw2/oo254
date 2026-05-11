@@ -3,6 +3,9 @@ namespace: flows
 flow:
   name: encode_and_probe_url
 
+  start:
+    encode_path: SUCCESS
+
   inputs:
     - base_url
     - raw_path_segment
@@ -39,6 +42,10 @@ flow:
     - probed_url: '${ base_url + "/" + encoded_segment }'
     - probe_result: '${ probe_result }'
     - error_message: '${ error_message }'
+
+  results:
+    - SUCCESS
+    - FAILURE
 
   results:
     - SUCCESS
