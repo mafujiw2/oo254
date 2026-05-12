@@ -3,15 +3,12 @@ namespace: flows
 flow:
   name: encode_and_probe_url
 
-  start:
-    encode_path: SUCCESS
-
   inputs:
     - base_url
     - raw_path_segment
     - attempts
 
-  tasks:
+  workflow:
     - encode_path:
       do:
         operation:
