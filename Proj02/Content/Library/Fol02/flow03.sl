@@ -8,7 +8,7 @@ flow:
     - raw_path_segment
     - attempts
 
-  tasks:
+  workflow:
     encode_path:
       do:
         io.cloudslang.base.http.url_encoder:
