@@ -12,7 +12,7 @@ flow:
     - attempts
 
   tasks:
-    encode_path:
+    - encode_path:
       do:
         operation:
           io.cloudslang.base.http.url_encoder:
@@ -25,7 +25,7 @@ flow:
         - SUCCESS: probe_endpoint
         - FAILURE: FAILURE
 
-    probe_endpoint:
+    - probe_endpoint:
       do:
         operation:
           io.cloudslang.base.http.verify_url_is_accessible:
