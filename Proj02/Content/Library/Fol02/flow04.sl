@@ -11,7 +11,7 @@ flow:
     - raw_path_segment
     - attempts
 
-  tasks:
+  workflow:
     encode_path:
       do:
         operation:
