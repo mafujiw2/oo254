@@ -9,7 +9,7 @@ flow:
     - attempts
 
   tasks:
-    encode_path:
+    - encode_path:
       do:
         io.cloudslang.base.http.url_encoder:
           - data: '${ raw_path_segment }'
@@ -21,7 +21,7 @@ flow:
         - SUCCESS: probe_endpoint
         - FAILURE: FAILURE
 
-    probe_endpoint:
+    - probe_endpoint:
       do:
         io.cloudslang.base.http.verify_url_is_accessible:
           - url: '${ base_url + "/" + encoded_segment }'
