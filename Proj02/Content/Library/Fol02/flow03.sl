@@ -23,9 +23,6 @@ flow:
         io.cloudslang.base.http.verify_url_is_accessible:
           - url: '${ base_url + "/" + encoded_segment }'
           - attempts: '${ attempts }'
-      publish:
-        - probe_result: '${ return_result }'
-        - error_message: '${ error_message }'
       navigate:
         - SUCCESS: SUCCESS
         - FAILURE: FAILURE
