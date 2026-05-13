@@ -7,20 +7,20 @@ flow:
     - attempts
   workflow:
     - encode_path:
-      do:
-        io.cloudslang.base.http.url_encoder:
-          - data: '${ raw_path_segment }'
-      navigate:
-        - SUCCESS: probe_endpoint
-        - FAILURE: FAILURE
+        do:
+          io.cloudslang.base.http.url_encoder:
+            - data: '${ raw_path_segment }'
+        navigate:
+          - SUCCESS: probe_endpoint
+          - FAILURE: FAILURE
     - probe_endpoint:
-      do:
-        io.cloudslang.base.http.verify_url_is_accessible:
-          - url: '${ base_url + "/" + encoded_segment }'
-          - attempts: '${ attempts }'
-      navigate:
-        - SUCCESS: SUCCESS
-        - FAILURE: FAILURE
+        do:
+          io.cloudslang.base.http.verify_url_is_accessible:
+            - url: '${ base_url + "/" + encoded_segment }'
+            - attempts: '${ attempts }'
+        navigate:
+          - SUCCESS: SUCCESS
+          - FAILURE: FAILURE
   outputs:
     - probed_url: '${ base_url + "/" + encoded_segment }'
     - probe_result: '${ probe_result }'
