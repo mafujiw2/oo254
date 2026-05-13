@@ -11,7 +11,6 @@ flow:
   workflow:
     - encode_path:
       do:
-        operation:
           io.cloudslang.base.http.url_encoder:
             - data: '${ raw_path_segment }'
             - safe: ''
@@ -24,7 +23,6 @@ flow:
 
     - probe_endpoint:
       do:
-        operation:
           io.cloudslang.base.http.verify_url_is_accessible:
             - url: '${ base_url + "/" + encoded_segment }'
             - attempts: '${ attempts }'
