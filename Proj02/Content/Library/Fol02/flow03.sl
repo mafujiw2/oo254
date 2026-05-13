@@ -14,9 +14,6 @@ flow:
         io.cloudslang.base.http.url_encoder:
           - data: '${ raw_path_segment }'
           - safe: ''
-      publish:
-        - encoded_segment: '${ result }'
-        - error_message: '${ error_message }'
       navigate:
         - SUCCESS: probe_endpoint
         - FAILURE: FAILURE
