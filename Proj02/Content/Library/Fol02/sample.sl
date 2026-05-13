@@ -1,42 +1,38 @@
-namespace: Fol02
+namespace: flows
+
 flow:
-  name: Flow02
+  name: encode_and_probe_url
+  inputs:
+    - base_url
+    - raw_path_segment
+    - attempts
   workflow:
-    - SQLCommand:
-        do_external:
-          f37316bf-b185-4533-919e-d4dc7deacd7a:
-            - DBServerName: TaiALM17New
-            - Username: sa
-            - Password:
-                value: ********
-                sensitive: true
-            - Database: under_line
+    - encode_path:
+        do:
+          io.cloudslang.base.http.url_encoder:
+            - data: '${ raw_path_segment }'
+            - safe: ''
+        publish:
+          - encoded_segment: '${ result }'
+          - encode_error: '${ error_message }'
         navigate:
-          - failure: FAILURE
-          - success: SUCCESS
+          - SUCCESS: probe_endpoint
+          - FAILURE: FAILURE
+    - probe_endpoint:
+        do:
+          io.cloudslang.base.http.verify_url_is_accessible:
+            - url: '${ base_url + "/" + encoded_segment }'
+            - attempts: '${ attempts }'
+        publish:
+          - probe_result: '${ return_result }'
+          - error_message: '${ error_message }'
+        navigate:
+          - SUCCESS: SUCCESS
+          - FAILURE: FAILURE
+  outputs:
+    - probed_url: '${ base_url + "/" + encoded_segment }'
+    - probe_result: '${ probe_result }'
+    - error_message: '${ error_message }'
   results:
     - SUCCESS
     - FAILURE
-extensions:
-  graph:
-    steps:
-      SQLCommand:
-        x: 200
-        'y': 80
-        navigate:
-          9ae09f98-9342-ca33-2f2b-1e70fc5ccf19:
-            targetId: 2e3e78f7-ffbb-115a-00b2-4ad51ff333b9
-            port: success
-          f1cb0f6b-ce16-d85e-0321-4b822a5c046b:
-            targetId: 29d58530-50bc-9657-069a-4910ac8457c9
-            port: failure
-    results:
-      SUCCESS:
-        2e3e78f7-ffbb-115a-00b2-4ad51ff333b9:
-          x: 80
-          'y': 120
-      FAILURE:
-        29d58530-50bc-9657-069a-4910ac8457c9:
-          x: 480
-          'y': 120
-
