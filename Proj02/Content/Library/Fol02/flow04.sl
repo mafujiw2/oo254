@@ -41,7 +41,3 @@ flow:
   results:
     - SUCCESS
     - FAILURE
-
-  results:
-    - SUCCESS
-    - FAILURE
