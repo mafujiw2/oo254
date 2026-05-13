@@ -10,7 +10,6 @@ flow:
       do:
         io.cloudslang.base.http.url_encoder:
           - data: '${ raw_path_segment }'
-          - safe: ''
       navigate:
         - SUCCESS: probe_endpoint
         - FAILURE: FAILURE
